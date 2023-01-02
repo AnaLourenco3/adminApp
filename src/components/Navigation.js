@@ -15,7 +15,7 @@ export const Navigation = () => {
   return (
     <Nav>
       <Logo href="/">
-        Codaisseur<span>templates</span>
+        Admin<span>App</span>
       </Logo>
       <Hamburger onClick={() => setOpen(!open)}>
         <span />
@@ -23,8 +23,8 @@ export const Navigation = () => {
         <span />
       </Hamburger>
       <Menu open={open}>
-        <MenuLink to="/">Gallery</MenuLink>
-        <MenuLink to="/upload">Upload</MenuLink>
+        <MenuLink to="/new-blog">New Blog</MenuLink>
+        <MenuLink to="/feedbacks">Manage Feedbacks on Homepage</MenuLink>
         {token ? (
           <button onClick={() => dispatch(logOut())}>Logout</button>
         ) : (
@@ -55,8 +55,8 @@ const Nav = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  background: #b22727;
-  /* position: absolute; */
+  background: #99c5c3;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;

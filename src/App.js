@@ -4,9 +4,12 @@ import { useDispatch } from "react-redux";
 import { getUserWithStoredToken } from "./store/user/thunks";
 // import { Routes, Route } from "react-router-dom";
 import { BrowserRouter as Router, Link, Routes, Route } from "react-router-dom";
-import Upload from "./pages/Upload.js";
-
+import ManageFeedback from "./pages/ManageFeedback.js";
+import NewBlogPage from "./pages/NewBlogPage.js";
+import Homepage from "./pages/Homepage";
 import { Navigation, MessageBox } from "./components";
+import DetailsPage from "./pages/DetailsPage";
+import EditPage from "./pages/EditPage";
 // import { Homepage, Login, SignUp } from "./pages"
 
 function App() {
@@ -22,11 +25,16 @@ function App() {
       <MessageBox />
       <div className="container">
         <Routes>
-          <Route path="/upload" element={<Upload />} />
+          <Route path="/" element={<Homepage />} />
+          <Route path="/blogs/:id" element={<DetailsPage />} />
+          <Route path="/edit-blog/:id" element={<EditPage />} />
+
+          <Route path="/feedbacks" element={<ManageFeedback />} />
+          <Route path="/new-blog" element={<NewBlogPage />} />
         </Routes>
       </div>
       {/* <Routes>
-        <Route path="/" element={<Homepage />}/>
+      
         <Route path="/signup" element={<SignUp />} />
         <Route path="/login" element={<Login />} />
       </Routes> */}
