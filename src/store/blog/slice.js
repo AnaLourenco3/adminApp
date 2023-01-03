@@ -9,21 +9,22 @@ export const blogSlice = createSlice({
   name: "blog",
   initialState,
   reducers: {
-    // blogPostSuccess: (state, action) => {
-    //   state.blogs.push(action.payload);
-    // },
-    // fetchBlogsSuccess: (state, action) => {
-    //   state.blogs = [...action.payload];
-    // },
-
     fetchBlogSuccess: (state, action) => {
       state.blog = { ...action.payload };
     },
+    updateBlogContentDetails: (state, action) => {
+      state.blog = action.payload;
+    },
+    imagesBlogPostSuccess: (state, action) => {
+      state.blog.blogImages.push(action.payload);
+    },
 
-    // blogDeleteSuccess: (state, action) => {
-    //   const blogId = action.payload;
-    //   state.blogs = state.blogs.filter((b) => b.id !== blogId);
-    // },
+    imageBlogDeleteSuccess: (state, action) => {
+      const imageBlogId = action.payload;
+      state.blog.blogImages = state.blog.blogImages.filter(
+        (i) => i.id !== imageBlogId
+      );
+    },
   },
 });
 
@@ -33,7 +34,11 @@ export const {
   // blogPostSuccess,
   // fetchBlogsSuccess,
   fetchBlogSuccess,
+  imagesBlogPostSuccess,
   // blogDeleteSuccess,
+  fetchImagesSuccess,
+  imageBlogDeleteSuccess,
+  updateBlogContentDetails,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

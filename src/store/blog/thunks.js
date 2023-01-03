@@ -6,6 +6,10 @@ import {
   blogPostSuccess,
   fetchBlogsSuccess,
   fetchBlogSuccess,
+  fetchImagesSuccess,
+  imageBlogDeleteSuccess,
+  imagesBlogPostSuccess,
+  updateBlogContentDetails,
 } from "./slice";
 
 export const fetchBlogsData = () => {
@@ -105,6 +109,127 @@ export const deleteBlog = (id) => {
           text: "You deleted a blog post",
         })
       );
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(
+          setMessage({
+            variant: "danger",
+            dismissable: true,
+            text: error.response.data.message,
+          })
+        );
+      } else {
+        console.log(error.message);
+        dispatch(
+          setMessage({
+            variant: "danger",
+            dismissable: true,
+            text: error.response.data.message,
+          })
+        );
+      }
+      dispatch(appDoneLoading());
+    }
+  };
+};
+
+export const editContentDetails = (
+  id,
+  categoryId,
+  categoryName,
+  date,
+  title,
+  text
+) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(appLoading());
+
+      const response = await axios.put(`${apiUrl}/blogs/${id}`, {
+        categoryId,
+        date,
+        title,
+        text,
+      });
+
+      dispatch(
+        updateBlogContentDetails({
+          ...response.data.blogData,
+          category: { id: categoryId, name: categoryName },
+        })
+      );
+      dispatch(appDoneLoading());
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};
+
+/// Images Blog ///
+
+export const deleteImageBlog = (id) => {
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    try {
+      // const { token } = getState().user;
+      await axios.delete(`${apiUrl}/images/${id}`, {
+        //   headers: {
+        //     Authorization: `Bearer ${token}`,
+        //   },
+      });
+      dispatch(imageBlogDeleteSuccess(id));
+      dispatch(
+        setMessage({
+          variant: "success",
+          dismissable: true,
+          text: "Your feedback has been deleted",
+        })
+      );
+      dispatch(appDoneLoading());
+    } catch (error) {
+      if (error.response) {
+        console.log(error.response.data.message);
+        dispatch(
+          setMessage({
+            variant: "danger",
+            dismissable: true,
+            text: error.response.data.message,
+          })
+        );
+      } else {
+        console.log(error.message);
+        dispatch(
+          setMessage({
+            variant: "danger",
+            dismissable: true,
+            text: error.response.data.message,
+          })
+        );
+      }
+      dispatch(appDoneLoading());
+    }
+  };
+};
+
+export const postBlogImages = (image, blogId) => {
+  return async (dispatch, getState) => {
+    dispatch(appLoading());
+    try {
+      const result = await axios.post(`${apiUrl}/blogs/${blogId}/images`, {
+        image: image,
+      });
+      console.log("this is from postBlogImages", result.data.image);
+      dispatch(imagesBlogPostSuccess(result.data.image));
+
+      dispatch(
+        setMessage({
+          variant: "success",
+          dismissable: true,
+          text: "Your images have been added",
+        })
+      );
+      dispatch(appDoneLoading());
     } catch (error) {
       if (error.response) {
         console.log(error.response.data.message);

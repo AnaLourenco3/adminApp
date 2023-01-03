@@ -77,7 +77,11 @@ function Homepage() {
         {blogs.map((b) => {
           return (
             <ImagesCard key={b.id}>
-              <Image src={b.mainImageUrl} alt="categories" />
+              <Image
+                src={b.mainImageUrl}
+                alt="categories"
+                style={{ width: "300px", height: "200px", marginRight: "10px" }}
+              />
               <h3>{b.title}</h3>
               <Link to={`/blogs/${b.id}`}>See more</Link>
             </ImagesCard>

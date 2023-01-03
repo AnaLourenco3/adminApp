@@ -101,9 +101,9 @@ export const ImagesCard = styled.div``;
 export const Image = styled.img`
   width: 150px;
 
-  &:hover {
+  /* &:hover {
     scale: 2;
-  }
+  } */
 `;
 
 export const Button = styled.button`
@@ -113,7 +113,7 @@ export const Button = styled.button`
   font-size: 0.9rem;
   border: 0;
   border-radius: 5px;
-  height: 40px;
+  height: 30px;
   padding: 0 20px;
   cursor: pointer;
   box-sizing: border-box;

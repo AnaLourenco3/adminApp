@@ -40,12 +40,13 @@ const MenuLink = styled(Link)`
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  color: #ececec;
+  font-weight: 600;
+  color: white;
   transition: all 0.3s ease-in;
   font-size: 0.9rem;
 
   &:hover {
-    color: #9cc094;
+    text-decoration: underline;
   }
 `;
 
@@ -64,7 +65,7 @@ const Nav = styled.div`
 
 const Logo = styled.a`
   padding: 1rem 0;
-  color: #ececec;
+  color: white;
   text-decoration: none;
   font-weight: 800;
   font-size: 1.7rem;

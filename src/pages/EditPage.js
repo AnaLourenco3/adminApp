@@ -1,57 +1,72 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { selectCategories, selectBlog } from "../store/blog/selectors";
+import { selectBlog } from "../store/blog/selectors";
+import { editContentDetails, fetchBlogDataById } from "../store/blog/thunks";
+import { useNavigate } from "react-router-dom";
+import { selectCategories } from "../store/categories/selectors";
 import { fetchCategories } from "../store/categories/thunks";
-import { addNewBlogPost } from "../store/blog/thunks";
-// import { postStory } from "../../store/user/actions";
-// import axios from "axios";
 
 export default function EditPage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [mainImageUrl, setMainImageUrl] = useState("");
-  const [category, setCategory] = useState(1);
-  //   const [videoUrl, setVideoUrl] = useState("");
-  const [file, setFile] = useState("");
-  //   const [files, setFiles] = useState("");
-  //   const [images, setImages] = useState("");
-
+  const [category, setCategory] = useState("");
   const blogData = useSelector(selectBlog);
 
-  const previewFiles = (file) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-
-    reader.onloadend = () => {
-      setMainImageUrl(reader.result);
-    };
-  };
-
-  const handleChange = (e) => {
-    const file = e.target.files[0];
-    setFile(file);
-    previewFiles(file);
-  };
-
-  function submitForm(event) {
-    event.preventDefault();
-
-    dispatch(addNewBlogPost(category, date, title, text, mainImageUrl));
-  }
+  const categories = useSelector(selectCategories);
 
   useEffect(() => {
     dispatch(fetchCategories());
-  }, [dispatch]);
+    if (blogData) {
+      console.log("from edit", blogData);
+      setDate(blogData.date);
+      setTitle(blogData.title);
+      setText(blogData.text);
+      setCategory(blogData.categoryId);
+    } else {
+      navigate("/");
+    }
+  }, [blogData, navigate, dispatch]);
+
+  function submitForm(event) {
+    event.preventDefault();
+    const categoryName = categories.find(
+      (c) => c.id === parseInt(category)
+    ).name;
+
+    dispatch(
+      editContentDetails(blogData.id, category, categoryName, date, title, text)
+    );
+    navigate(`/blogs/${blogData.id}`);
+  }
 
   return (
     <FormWrapper>
       <Form action="#">
         <Title>Edit blog Post</Title>
+        <FormGroup>
+          <FormLabel>Edit category:</FormLabel>
+          <InputSelect
+            name="category"
+            onChange={(event) => setCategory(event.target.value)}
+            required
+            value={category}
+          >
+            <option value="">----Select a category----</option>
+            {categories &&
+              categories.map((c) => {
+                return (
+                  <option key={c.id} value={c.id}>
+                    {c.name}
+                  </option>
+                );
+              })}
+          </InputSelect>
+        </FormGroup>
 
         <FormGroup>
           <FormLabel>Date:</FormLabel>
@@ -83,50 +98,7 @@ export default function EditPage() {
             placeholder="Write your text here"
           />
         </FormGroup>
-        <FormGroup>
-          <FormLabel>Main Image url:</FormLabel>
-          <InputImage
-            id="mainImage"
-            onChange={(e) => handleChange(e)}
-            type="file"
-            placeholder="Main picture"
-            required
-            accept="image/png, image/jpeg, img/jpg, image/jfif"
-          />
-          {mainImageUrl && (
-            <img src={mainImageUrl} alt="chosen" style={{ width: "300px" }} />
-          )}
-        </FormGroup>
-        {/* <FormGroup>
-            <FormLabel>
-              Add video url (only youtube supported): example
-              https://www.youtube.com/embed/xNRJwmlRBNU
-            </FormLabel>
-            <Input
-              id={videoUrl}
-              value={videoUrl}
-              onChange={(event) => setVideoUrl(event.target.value)}
-              type="text"
-              placeholder="Video Url"
-            />
-          </FormGroup>
-          <FormGroup>
-            <FormLabel>Add post images:</FormLabel>
-            <InputImage
-              id={images}
-              value={images}
-              onChange={(event) => setImages(event.target.value)}
-              type="file"
-              placeholder="Pictures on blog details"
-              required
-              accept="image/png, image/jpeg, img/jpg, image/jfif"
-              multiple
-            />
-            {images &&
-              images.map((i) => (
-                <img src={i} alt="chosen" style={{ width: "300px" }} />
-              ))}
-          </FormGroup> */}
+
         <FormGroup>
           <Button type="submit" onClick={submitForm}>
             Post!

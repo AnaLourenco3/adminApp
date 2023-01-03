@@ -32,6 +32,7 @@ function DetailsPage() {
     <ContainerBody>
       <ContainerBlogDetails>
         <img src={blogData.mainImageUrl} alt="mainImage" width="500px" />
+        <p>Category: {blogData.category.name}</p>
         <p>{blogData.date}</p>
         <h2>{blogData.title}</h2>
         <p>{blogData.text}</p>
@@ -42,8 +43,11 @@ function DetailsPage() {
           >
             Delete
           </Button>
-          <Link to={`/edit-blog/${blogData.id}`}>
-            <Button>Edit</Button>
+          <Link to={"/edit-blog"} style={{ textDecoration: "none" }}>
+            <Button style={{ marginRight: "20px" }}>Edit Content</Button>
+          </Link>
+          <Link to={"/images-blog"} style={{ textDecoration: "none" }}>
+            <Button>Add/Delete Post Images</Button>
           </Link>
         </Buttons>
       </ContainerBlogDetails>

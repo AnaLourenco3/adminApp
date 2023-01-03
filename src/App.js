@@ -10,6 +10,7 @@ import Homepage from "./pages/Homepage";
 import { Navigation, MessageBox } from "./components";
 import DetailsPage from "./pages/DetailsPage";
 import EditPage from "./pages/EditPage";
+import DetailsImagePage from "./pages/DetailsImagePage";
 // import { Homepage, Login, SignUp } from "./pages"
 
 function App() {
@@ -27,8 +28,8 @@ function App() {
         <Routes>
           <Route path="/" element={<Homepage />} />
           <Route path="/blogs/:id" element={<DetailsPage />} />
-          <Route path="/edit-blog/:id" element={<EditPage />} />
-
+          <Route path="/edit-blog" element={<EditPage />} />
+          <Route path="/images-blog" element={<DetailsImagePage />} />
           <Route path="/feedbacks" element={<ManageFeedback />} />
           <Route path="/new-blog" element={<NewBlogPage />} />
         </Routes>
