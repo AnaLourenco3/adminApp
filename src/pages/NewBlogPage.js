@@ -7,9 +7,12 @@ import { fetchCategories } from "../store/categories/thunks";
 import { addNewBlogPost } from "../store/blog/thunks";
 // import { postStory } from "../../store/user/actions";
 // import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 export default function NewBlogPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [date, setDate] = useState("");
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
@@ -17,11 +20,12 @@ export default function NewBlogPage() {
   const [category, setCategory] = useState(1);
   //   const [videoUrl, setVideoUrl] = useState("");
   const [file, setFile] = useState("");
+
   //   const [files, setFiles] = useState("");
   //   const [images, setImages] = useState("");
 
   const categories = useSelector(selectCategories);
-
+  const { id } = useParams();
   const previewFiles = (file) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -41,6 +45,7 @@ export default function NewBlogPage() {
     event.preventDefault();
 
     dispatch(addNewBlogPost(category, date, title, text, mainImageUrl));
+    // navigate(`/blogs/${id}`);
   }
 
   useEffect(() => {
@@ -163,8 +168,9 @@ export const Form = styled.form`
   max-width: 700px;
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h2`
   margin-top: 60px;
+  font-family: Poppins;
 `;
 
 export const FormGroup = styled.div``;

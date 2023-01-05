@@ -6,6 +6,7 @@ import { selectBlog } from "../store/blog/selectors";
 import { deleteBlog, fetchBlogDataById } from "../store/blog/thunks";
 import { Button } from "./ManageFeedback";
 import { useNavigate } from "react-router-dom";
+import DetailsImagePage from "./DetailsImagePage";
 
 function DetailsPage() {
   const dispatch = useDispatch();
@@ -29,39 +30,63 @@ function DetailsPage() {
     return <p>Loading...</p>;
 
   return (
-    <ContainerBody>
-      <ContainerBlogDetails>
-        <img src={blogData.mainImageUrl} alt="mainImage" width="500px" />
-        <p>Category: {blogData.category.name}</p>
-        <p>{blogData.date}</p>
-        <h2>{blogData.title}</h2>
-        <p>{blogData.text}</p>
-        <Buttons>
-          <Button
-            style={{ marginRight: "20px" }}
-            onClick={(e) => onDelete(e, blogData.id)}
-          >
-            Delete
-          </Button>
-          <Link to={"/edit-blog"} style={{ textDecoration: "none" }}>
-            <Button style={{ marginRight: "20px" }}>Edit Content</Button>
-          </Link>
-          <Link to={"/images-blog"} style={{ textDecoration: "none" }}>
-            <Button>Add/Delete Post Images</Button>
-          </Link>
-        </Buttons>
-      </ContainerBlogDetails>
-    </ContainerBody>
+    <Container>
+      <ButtonBack onClick={() => navigate("/")}>Back</ButtonBack>
+      <ContainerBody>
+        <ContainerBlogDetails>
+          <img src={blogData.mainImageUrl} alt="mainImage" width="500px" />
+          <Buttons>
+            <Button
+              style={{ marginRight: "20px" }}
+              onClick={(e) => onDelete(e, blogData.id)}
+            >
+              Delete
+            </Button>
+            <Link to={"/edit-blog"} style={{ textDecoration: "none" }}>
+              <Button style={{ marginRight: "20px" }}>Edit Content</Button>
+            </Link>
+            <Link to={"/images-blog"} style={{ textDecoration: "none" }}>
+              <Button>Add/Delete Post Images</Button>
+            </Link>
+          </Buttons>
+          <p>Category: {blogData.category.name}</p>
+          <p>{blogData.date}</p>
+          <h2>{blogData.title}</h2>
+          <p>{blogData.text}</p>
+        </ContainerBlogDetails>
+        {/* <DetailsImagePage /> */}
+        <Images>
+          {blogData &&
+            blogData.blogImages.map((image) => {
+              return (
+                <Image key={image.id}>
+                  <img
+                    src={image.imagesUrl}
+                    height="200"
+                    alt="upload"
+                    style={{ marginBottom: "7px" }}
+                  />
+                </Image>
+              );
+            })}
+        </Images>
+      </ContainerBody>
+    </Container>
   );
 }
 
 export default DetailsPage;
 
+const Container = styled.div`
+  padding: 2rem 0;
+  margin-top: 30px;
+`;
+
 const ContainerBody = styled.div`
-  width: 60%;
+  width: 100%;
   min-height: 800px;
   max-height: none;
-  margin: 125px auto auto;
+  margin: 125px auto auto auto;
   line-height: 30px;
   text-align: center;
   font-family: "Poppins";
@@ -77,7 +102,7 @@ const ContainerBody = styled.div`
 `;
 const ContainerBlogDetails = styled.div`
   font-size: 1rem;
-  margin-bottom: 70px;
+
   @media (max-width: 768px) {
     font-size: 0.8rem;
     margin-bottom: 40px;
@@ -87,4 +112,22 @@ const ContainerBlogDetails = styled.div`
 const Buttons = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const Images = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Image = styled.div`
+  margin: 1rem 0.5rem;
+  position: relative;
+`;
+
+const ButtonBack = styled.button`
+  border: none;
+  background: none;
 `;

@@ -5,9 +5,13 @@ import { deleteImageBlog, postBlogImages } from "../store/blog/thunks";
 import { selectBlog, selectImagesBlog } from "../store/blog/selectors";
 import { useParams } from "react-router-dom";
 
+import { useNavigate } from "react-router-dom";
+
 export default function DetailsImagePage() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [selectedImages, setSelectedImages] = useState([]);
+
   const blogData = useSelector(selectBlog);
 
   const onSelectFile = (event) => {
@@ -50,6 +54,9 @@ export default function DetailsImagePage() {
 
   return (
     <Container>
+      <ButtonBack onClick={() => navigate(`/blogs/${blogData.id}`)}>
+        Back
+      </ButtonBack>
       <Title>Upload Images in your blog post</Title>
       <Label>
         + Add Images
@@ -229,4 +236,9 @@ const Error = styled.p`
   .error span {
     color: red;
   }
+`;
+
+const ButtonBack = styled.button`
+  border: none;
+  background: none;
 `;
