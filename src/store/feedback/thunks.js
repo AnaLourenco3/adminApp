@@ -87,7 +87,7 @@ export const postFeedback = (image) => {
         setMessage({
           variant: "success",
           dismissable: true,
-          text: "Your feedback has been deleted",
+          text: "Your feedback has been added",
         })
       );
       dispatch(feedbackPostSuccess(result.data.feedback));
