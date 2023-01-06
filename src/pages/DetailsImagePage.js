@@ -123,7 +123,7 @@ export default function DetailsImagePage() {
                   src={image.imagesUrl}
                   height="200"
                   alt="upload"
-                  style={{ marginBottom: "7px" }}
+                  style={{ marginBottom: "20px" }}
                 />
 
                 <ButtonImage onClick={() => handleDelete(image.id)}>

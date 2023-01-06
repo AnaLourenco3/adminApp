@@ -19,6 +19,10 @@ export const blogSlice = createSlice({
       state.blog.blogImages.push(action.payload);
     },
 
+    updateMainImage: (state, action) => {
+      state.blog.mainImageUrl = action.payload;
+    },
+
     imageBlogDeleteSuccess: (state, action) => {
       const imageBlogId = action.payload;
       state.blog.blogImages = state.blog.blogImages.filter(
@@ -39,6 +43,7 @@ export const {
   fetchImagesSuccess,
   imageBlogDeleteSuccess,
   updateBlogContentDetails,
+  updateMainImage,
 } = blogSlice.actions;
 
 export default blogSlice.reducer;

@@ -6,6 +6,7 @@ import {
   feedbackPostSuccess,
   fetchFeedbacksSuccess,
 } from "./slice";
+import { showMessageWithTimeout } from "../appState/thunks";
 
 export const fetchFeedbacks = () => {
   return async (dispatch, getState) => {
@@ -33,12 +34,19 @@ export const deleteFeedback = (id) => {
         //   },
       });
 
+      // dispatch(
+      //   setMessage({
+      //     variant: "success",
+      //     dismissable: true,
+      //     text: "Your feedback has been deleted",
+      //   })
+      // );
       dispatch(
-        setMessage({
-          variant: "success",
-          dismissable: true,
-          text: "Your feedback has been deleted",
-        })
+        showMessageWithTimeout(
+          "success",
+          true,
+          "Your feedback has been deleted"
+        )
       );
       dispatch(feedbackDeleteSuccess(id));
       dispatch(appDoneLoading());

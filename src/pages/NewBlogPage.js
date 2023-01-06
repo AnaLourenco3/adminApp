@@ -9,6 +9,8 @@ import { addNewBlogPost } from "../store/blog/thunks";
 // import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import { apiUrl } from "../config/constants";
 
 export default function NewBlogPage() {
   const dispatch = useDispatch();
@@ -18,7 +20,7 @@ export default function NewBlogPage() {
   const [text, setText] = useState("");
   const [mainImageUrl, setMainImageUrl] = useState("");
   const [category, setCategory] = useState(1);
-  //   const [videoUrl, setVideoUrl] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const [file, setFile] = useState("");
 
   //   const [files, setFiles] = useState("");
@@ -41,88 +43,102 @@ export default function NewBlogPage() {
     previewFiles(file);
   };
 
-  function submitForm(event) {
+  const submitForm = async (event) => {
     event.preventDefault();
 
-    dispatch(addNewBlogPost(category, date, title, text, mainImageUrl));
-    // navigate(`/blogs/${id}`);
-  }
+    const response = await axios.post(`${apiUrl}/blogs`, {
+      categoryId: category,
+      date,
+      title,
+      text,
+      mainImage: mainImageUrl,
+      videoUrl,
+    });
+    setDate("");
+    setTitle("");
+    setText("");
+    setMainImageUrl("");
+    setVideoUrl("");
+
+    navigate(`/blogs/${response.data.newBlogPost.id}`);
+  };
 
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
   return (
-    <FormWrapper>
-      <Form action="#">
-        <Title>New blog Post</Title>
-        <FormGroup>
-          <FormLabel>Choose a category:</FormLabel>
-          <InputSelect
-            name="category"
-            onChange={(event) => setCategory(event.target.value)}
-            required
-            value={category}
-          >
-            <option value="">----Select a category----</option>
-            {categories &&
-              categories.map((c) => {
-                return (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                );
-              })}
-          </InputSelect>
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Date:</FormLabel>
-          <Input
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
-            type="text"
-            placeholder="Date example: 27.12.2022"
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Title:</FormLabel>
-          <Input
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            type="text"
-            placeholder="Post title"
-            required
-          />
-        </FormGroup>
-
-        <FormGroup>
-          <FormLabel>Text:</FormLabel>
-          <TextArea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            type="text"
-            placeholder="Write your text here"
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Main Image url:</FormLabel>
-          <InputImage
-            id="mainImage"
-            onChange={(e) => handleChange(e)}
-            type="file"
-            placeholder="Main picture"
-            required
-            accept="image/png, image/jpeg, img/jpg, image/jfif"
-          />
-          {mainImageUrl && (
-            <img src={mainImageUrl} alt="chosen" style={{ width: "300px" }} />
-          )}
-        </FormGroup>
-        {/* <FormGroup>
+    <Container>
+      <FormWrapper>
+        <Form action="#">
+          <Title>New blog Post</Title>
+          <FormGroup>
+            <FormLabel>Choose a category:</FormLabel>
+            <InputSelect
+              name="category"
+              onChange={(event) => setCategory(event.target.value)}
+              required
+              value={category}
+            >
+              <option value="">----Select a category----</option>
+              {categories &&
+                categories.map((c) => {
+                  return (
+                    <option key={c.id} value={c.id}>
+                      {c.name}
+                    </option>
+                  );
+                })}
+            </InputSelect>
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Date:</FormLabel>
+            <Input
+              value={date}
+              onChange={(event) => setDate(event.target.value)}
+              type="text"
+              placeholder="Date example: 27.12.2022"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Title:</FormLabel>
+            <Input
+              value={title}
+              onChange={(event) => setTitle(event.target.value)}
+              type="text"
+              placeholder="Post title"
+              required
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Text:</FormLabel>
+            <TextArea
+              value={text}
+              onChange={(event) => setText(event.target.value)}
+              type="text"
+              placeholder="Write your text here"
+            />
+          </FormGroup>
+          <FormGroup>
+            <FormLabel>Main Image url:</FormLabel>
+            <InputImage
+              id="mainImage"
+              onChange={(e) => handleChange(e)}
+              type="file"
+              placeholder="Main picture"
+              required
+              accept="image/png, image/jpeg, img/jpg, image/jfif"
+            />
+            {mainImageUrl && (
+              <img src={mainImageUrl} alt="chosen" style={{ width: "300px" }} />
+            )}
+          </FormGroup>
+          <FormGroup>
             <FormLabel>
-              Add video url (only youtube supported): example
-              https://www.youtube.com/embed/xNRJwmlRBNU
+              Add Youtube video url (only permitted for Tutorial category):
+              example "https://www.youtube.com/embed/FFe8T93Xkh0" (tutorial
+              video)
             </FormLabel>
             <Input
               id={videoUrl}
@@ -132,45 +148,40 @@ export default function NewBlogPage() {
               placeholder="Video Url"
             />
           </FormGroup>
+
           <FormGroup>
-            <FormLabel>Add post images:</FormLabel>
-            <InputImage
-              id={images}
-              value={images}
-              onChange={(event) => setImages(event.target.value)}
-              type="file"
-              placeholder="Pictures on blog details"
-              required
-              accept="image/png, image/jpeg, img/jpg, image/jfif"
-              multiple
-            />
-            {images &&
-              images.map((i) => (
-                <img src={i} alt="chosen" style={{ width: "300px" }} />
-              ))}
-          </FormGroup> */}
-        <FormGroup>
-          <Button type="submit" onClick={submitForm}>
-            Post!
-          </Button>
-        </FormGroup>
-      </Form>
-    </FormWrapper>
+            <Button type="submit" onClick={submitForm}>
+              Post!
+            </Button>
+          </FormGroup>
+        </Form>
+      </FormWrapper>
+    </Container>
   );
 }
 
+const Container = styled.div`
+  padding: 2rem 0;
+  margin-top: 30px auto auto auto;
+`;
+
+export const Title = styled.h1`
+  text-align: center;
+  margin: 60px auto 60px auto;
+`;
+
 export const FormWrapper = styled.div`
-  display: flex;
+  display: block;
+  text-align: center;
 `;
 
 export const Form = styled.form`
   width: 100%;
-  max-width: 700px;
-`;
-
-export const Title = styled.h2`
-  margin-top: 60px;
-  font-family: Poppins;
+  max-width: 800px;
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 `;
 
 export const FormGroup = styled.div``;

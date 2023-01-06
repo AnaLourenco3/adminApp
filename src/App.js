@@ -11,6 +11,7 @@ import { Navigation, MessageBox } from "./components";
 import DetailsPage from "./pages/DetailsPage";
 import EditPage from "./pages/EditPage";
 import DetailsImagePage from "./pages/DetailsImagePage";
+import EditMainImage from "./pages/EditMainImage";
 // import { Homepage, Login, SignUp } from "./pages"
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
           <Route path="/images-blog" element={<DetailsImagePage />} />
           <Route path="/feedbacks" element={<ManageFeedback />} />
           <Route path="/new-blog" element={<NewBlogPage />} />
+          <Route path="/edit-main-blog-image" element={<EditMainImage />} />
         </Routes>
       </div>
       {/* <Routes>

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import {
@@ -8,7 +7,6 @@ import {
   postFeedback,
 } from "../store/feedback/thunks";
 import { selectFeedbacks } from "../store/feedback/selectors";
-
 import styled from "styled-components";
 
 export default function Upload() {
@@ -39,7 +37,6 @@ export default function Upload() {
   const dispatch = useDispatch();
   const feedbacks = useSelector(selectFeedbacks);
 
-  // console.log("from page", feedbacks);
   const onDelete = (e, feedbackId) => {
     e.preventDefault();
     dispatch(deleteFeedback(feedbackId));
@@ -50,10 +47,10 @@ export default function Upload() {
   }, [dispatch]);
 
   return (
-    <div>
-      <div>
+    <Container>
+      <FormWrapper>
         <Title>Upload a Feedback</Title>
-        <form onSubmit={(e) => handleSubmit(e)} className="form">
+        <Form onSubmit={(e) => handleSubmit(e)} className="form">
           <input
             id="file"
             type="file"
@@ -64,46 +61,69 @@ export default function Upload() {
             className="form-input"
           />
           <Button type="submit">Submit</Button>
-        </form>
+        </Form>
         {image && <img src={image} alt="chosen" style={{ width: "300px" }} />}
-      </div>
+      </FormWrapper>
 
       <div>
-        <h1>Feedbacks on your page</h1>
-        <Container>
+        <Title>Feedbacks on your page</Title>
+        <Images>
           {feedbacks &&
             feedbacks.map((f) => {
               return (
-                <ImagesCard key={f.id}>
-                  <Image src={f.imageUrl} alt="feedback" />
-                  <Button onClick={(e) => onDelete(e, f.id)}>Delete</Button>
-                </ImagesCard>
+                <Image key={f.id}>
+                  <img
+                    src={f.imageUrl}
+                    height="200"
+                    alt="upload"
+                    style={{ marginBottom: "20px" }}
+                  />
+                  <ButtonImage onClick={(e) => onDelete(e, f.id)}>
+                    Delete
+                  </ButtonImage>
+                </Image>
               );
             })}
-        </Container>
+        </Images>
       </div>
-    </div>
+    </Container>
   );
 }
 
-export const Title = styled.h1`
-  margin-top: 60px;
-`;
-
-export const Container = styled.div`
+const Container = styled.div`
+  padding: 2rem 0;
+  margin-top: 30px;
+  text-align: center;
   display: flex;
-  flex-wrap: wrap;
-  margin: 5px;
+  gap: 70px;
 `;
 
-export const ImagesCard = styled.div``;
+export const Title = styled.h1`
+  text-align: center;
+  margin: 60px auto 60px auto;
+`;
 
-export const Image = styled.img`
+export const FormWrapper = styled.div`
+  display: inline-block;
+`;
+
+export const Form = styled.form`
+  width: 300px;
+  max-width: 700px;
+`;
+
+export const Images = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Image = styled.div`
+  margin: 1rem 0.5rem;
+  position: relative;
   width: 150px;
-
-  /* &:hover {
-    scale: 2;
-  } */
 `;
 
 export const Button = styled.button`
@@ -120,4 +140,20 @@ export const Button = styled.button`
   /* display: flex;
   flex-direction: row; */
   margin-top: 7px;
+`;
+
+const ButtonImage = styled.button`
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  cursor: pointer;
+  border: none;
+  color: white;
+  background-color: #f7797d;
+  border-radius: 5px;
+  padding: 3px 5px;
+
+  &:hover {
+    scale: 1.1;
+  }
 `;

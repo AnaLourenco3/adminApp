@@ -2,14 +2,11 @@ import { apiUrl } from "../../config/constants";
 import axios from "axios";
 import { appLoading, appDoneLoading, setMessage } from "../appState/slice";
 import {
-  blogDeleteSuccess,
-  blogPostSuccess,
-  fetchBlogsSuccess,
   fetchBlogSuccess,
-  fetchImagesSuccess,
   imageBlogDeleteSuccess,
   imagesBlogPostSuccess,
   updateBlogContentDetails,
+  updateMainImage,
 } from "./slice";
 
 export const fetchBlogsData = () => {
@@ -42,7 +39,14 @@ export const fetchBlogDataById = (id) => {
   };
 };
 
-export const addNewBlogPost = (categoryId, date, title, text, mainImage) => {
+export const addNewBlogPost = (
+  categoryId,
+  date,
+  title,
+  text,
+  mainImage,
+  videoUrl
+) => {
   return async (dispatch, getState) => {
     try {
       dispatch(appLoading());
@@ -53,6 +57,7 @@ export const addNewBlogPost = (categoryId, date, title, text, mainImage) => {
         title,
         text,
         mainImage,
+        videoUrl,
       });
       console.log(response.data.newBlogPost);
       dispatch(appDoneLoading());
@@ -166,6 +171,25 @@ export const editContentDetails = (
   };
 };
 
+//replace main image blog
+
+export const replaceMainImageBlog = (id, mainImage) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(appLoading());
+
+      const response = await axios.put(`${apiUrl}/blogs/${id}/main-image`, {
+        mainImage,
+      });
+
+      dispatch(updateMainImage(response.data.blogData.mainImageUrl));
+      dispatch(appDoneLoading());
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+};
+
 /// Images Blog ///
 
 export const deleteImageBlog = (id) => {
@@ -183,7 +207,7 @@ export const deleteImageBlog = (id) => {
         setMessage({
           variant: "success",
           dismissable: true,
-          text: "Your feedback has been deleted",
+          text: "Your image has been deleted",
         })
       );
       dispatch(appDoneLoading());

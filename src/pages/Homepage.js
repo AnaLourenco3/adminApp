@@ -13,7 +13,7 @@ import { selectBlogs } from "../store/blog/selectors";
 import { fetchBlogData } from "../store/blog/thunks";
 import { fetchCategoriesWithData } from "../store/categories/thunks";
 import { selectCategoriesWithData } from "../store/categories/selectors";
-import { Image, ImagesCard } from "./ManageFeedback";
+
 import axios from "axios";
 import { apiUrl } from "../config/constants";
 
@@ -72,15 +72,23 @@ function Homepage() {
       <ContainerBlogs>
         {blogs.map((b) => {
           return (
-            <ImagesCard key={b.id}>
-              <Image
-                src={b.mainImageUrl}
-                alt="categories"
-                style={{ width: "300px", height: "200px", marginRight: "30px" }}
-              />
-              <h3>{b.title}</h3>
-              <Link to={`/blogs/${b.id}`}>See more</Link>
-            </ImagesCard>
+            <Images key={b.id}>
+              {b.mainImageUrl && (
+                <Image
+                  src={b.mainImageUrl ? b.mainImageUrl : <></>}
+                  alt="categories"
+                  style={{
+                    width: "300px",
+                    height: "200px",
+                    marginRight: "30px",
+                  }}
+                />
+              )}
+              <Data>
+                <h4>{b.title}</h4>
+                <Link to={`/blogs/${b.id}`}>See more</Link>
+              </Data>
+            </Images>
           );
         })}
       </ContainerBlogs>
@@ -96,17 +104,37 @@ const Container = styled.div`
   text-align: center;
 `;
 
+const Images = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin: 5px;
+`;
+
+const Image = styled.img`
+  margin: 1rem 0.5rem;
+  position: relative;
+  width: 150px;
+`;
+
 const FormWrapper = styled.div`
   display: inline-block;
 `;
 
-export const ContainerBlogs = styled.div`
+const ContainerBlogs = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin: 5px;
   justify-content: center;
   align-items: center;
   margin-top: 50px;
+`;
+
+const Data = styled.div`
+  display: flex;
+  flex-direction: column;
 `;
 
 const Welcome = styled.p`

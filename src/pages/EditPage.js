@@ -45,69 +45,92 @@ export default function EditPage() {
   }
 
   return (
-    <FormWrapper>
-      <Form action="#">
-        <Title>Edit blog Post</Title>
-        <FormGroup>
-          <FormLabel>Edit category:</FormLabel>
-          <InputSelect
-            name="category"
-            onChange={(event) => setCategory(event.target.value)}
-            required
-            value={category}
-          >
-            <option value="">----Select a category----</option>
-            {categories &&
-              categories.map((c) => {
-                return (
-                  <option key={c.id} value={c.id}>
-                    {c.name}
-                  </option>
-                );
-              })}
-          </InputSelect>
-        </FormGroup>
+    <Container>
+      <ButtonBack onClick={() => navigate(`/blogs/${blogData.id}`)}>
+        Back
+      </ButtonBack>
+      <ContainerBody>
+        <FormWrapper>
+          <Form action="#">
+            <Title>Edit blog Post</Title>
+            <FormGroup>
+              <FormLabel>Edit category:</FormLabel>
+              <InputSelect
+                name="category"
+                onChange={(event) => setCategory(event.target.value)}
+                required
+                value={category}
+              >
+                <option value="">----Select a category----</option>
+                {categories &&
+                  categories.map((c) => {
+                    return (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    );
+                  })}
+              </InputSelect>
+            </FormGroup>
 
-        <FormGroup>
-          <FormLabel>Date:</FormLabel>
-          <Input
-            value={date}
-            onChange={(event) => setDate(event.target.value)}
-            type="text"
-            placeholder="Date example: 27.12.2022"
-            required
-          />
-        </FormGroup>
-        <FormGroup>
-          <FormLabel>Title:</FormLabel>
-          <Input
-            value={title}
-            onChange={(event) => setTitle(event.target.value)}
-            type="text"
-            placeholder="Post title"
-            required
-          />
-        </FormGroup>
+            <FormGroup>
+              <FormLabel>Date:</FormLabel>
+              <Input
+                value={date}
+                onChange={(event) => setDate(event.target.value)}
+                type="text"
+                placeholder="Date example: 27.12.2022"
+                required
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormLabel>Title:</FormLabel>
+              <Input
+                value={title}
+                onChange={(event) => setTitle(event.target.value)}
+                type="text"
+                placeholder="Post title"
+                required
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <FormLabel>Text:</FormLabel>
-          <TextArea
-            value={text}
-            onChange={(event) => setText(event.target.value)}
-            type="text"
-            placeholder="Write your text here"
-          />
-        </FormGroup>
+            <FormGroup>
+              <FormLabel>Text:</FormLabel>
+              <TextArea
+                value={text}
+                onChange={(event) => setText(event.target.value)}
+                type="text"
+                placeholder="Write your text here"
+              />
+            </FormGroup>
 
-        <FormGroup>
-          <Button type="submit" onClick={submitForm}>
-            Post!
-          </Button>
-        </FormGroup>
-      </Form>
-    </FormWrapper>
+            <FormGroup>
+              <Button type="submit" onClick={submitForm}>
+                Post!
+              </Button>
+            </FormGroup>
+          </Form>
+        </FormWrapper>
+      </ContainerBody>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  padding: 2rem 0;
+  margin-top: 30px;
+`;
+
+const ContainerBody = styled.div`
+  text-align: center;
+  max-width: 700px;
+
+  width: 100%;
+
+  margin: 0 auto auto auto;
+
+  text-align: center;
+`;
 
 export const FormWrapper = styled.div`
   display: flex;
@@ -116,10 +139,13 @@ export const FormWrapper = styled.div`
 export const Form = styled.form`
   width: 100%;
   max-width: 700px;
+  display: inline-block;
+  text-align: left;
 `;
 
 export const Title = styled.h1`
-  margin-top: 60px;
+  margin: 60px auto 80px auto;
+  text-align: center;
 `;
 
 export const FormGroup = styled.div``;
@@ -180,3 +206,5 @@ const TextArea = styled.textarea`
   margin: 10px 0 20px 0;
   padding: 20px;
 `;
+
+const ButtonBack = styled.button``;
