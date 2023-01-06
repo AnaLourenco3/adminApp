@@ -75,7 +75,7 @@ function Homepage() {
             <Images key={b.id}>
               {b.mainImageUrl && (
                 <Image
-                  src={b.mainImageUrl ? b.mainImageUrl : <></>}
+                  src={b.mainImageUrl ? b.mainImageUrl : ""}
                   alt="categories"
                   style={{
                     width: "300px",

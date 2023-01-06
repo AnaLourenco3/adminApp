@@ -137,11 +137,7 @@ export default function NewBlogPage() {
             )}
           </FormGroup>
           <FormGroup>
-            <FormLabel>
-              Add Youtube video url (only permitted for Tutorial category):
-              example "https://www.youtube.com/embed/FFe8T93Xkh0" (tutorial
-              video)
-            </FormLabel>
+            <FormLabel>Add Youtube video url:</FormLabel>
             <Input
               id={videoUrl}
               value={videoUrl}

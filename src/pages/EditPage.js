@@ -15,6 +15,7 @@ export default function EditPage() {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [category, setCategory] = useState("");
+  const [videoUrl, setVideoUrl] = useState("");
   const blogData = useSelector(selectBlog);
 
   const categories = useSelector(selectCategories);
@@ -27,6 +28,7 @@ export default function EditPage() {
       setTitle(blogData.title);
       setText(blogData.text);
       setCategory(blogData.categoryId);
+      setVideoUrl(blogData.videoUrl);
     } else {
       navigate("/");
     }
@@ -39,7 +41,15 @@ export default function EditPage() {
     ).name;
 
     dispatch(
-      editContentDetails(blogData.id, category, categoryName, date, title, text)
+      editContentDetails(
+        blogData.id,
+        category,
+        categoryName,
+        date,
+        title,
+        text,
+        videoUrl
+      )
     );
     navigate(`/blogs/${blogData.id}`);
   }
@@ -101,6 +111,20 @@ export default function EditPage() {
                 onChange={(event) => setText(event.target.value)}
                 type="text"
                 placeholder="Write your text here"
+              />
+            </FormGroup>
+            <FormGroup>
+              <FormLabel>
+                Add Youtube video url (only permitted for Tutorial category):
+                example "https://www.youtube.com/embed/FFe8T93Xkh0" (tutorial
+                video)
+              </FormLabel>
+              <Input
+                id={videoUrl}
+                value={videoUrl}
+                onChange={(event) => setVideoUrl(event.target.value)}
+                type="text"
+                placeholder="Video Url"
               />
             </FormGroup>
 
@@ -207,4 +231,7 @@ const TextArea = styled.textarea`
   padding: 20px;
 `;
 
-const ButtonBack = styled.button``;
+const ButtonBack = styled.button`
+  border: none;
+  background: none;
+`;

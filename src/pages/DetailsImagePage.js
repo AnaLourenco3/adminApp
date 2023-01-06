@@ -31,6 +31,7 @@ export default function DetailsImagePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     selectedImages.forEach(async (imageUrl) => {
+      await new Promise((r) => setTimeout(r, 500));
       const file = await fetch(imageUrl).then((r) => r.blob());
       URL.revokeObjectURL(imageUrl);
       const reader = new FileReader();

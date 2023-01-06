@@ -145,7 +145,8 @@ export const editContentDetails = (
   categoryName,
   date,
   title,
-  text
+  text,
+  videoUrl
 ) => {
   return async (dispatch, getState) => {
     try {
@@ -156,6 +157,7 @@ export const editContentDetails = (
         date,
         title,
         text,
+        videoUrl,
       });
 
       dispatch(
@@ -164,6 +166,7 @@ export const editContentDetails = (
           category: { id: categoryId, name: categoryName },
         })
       );
+
       dispatch(appDoneLoading());
     } catch (e) {
       console.log(e.message);
@@ -183,6 +186,7 @@ export const replaceMainImageBlog = (id, mainImage) => {
       });
 
       dispatch(updateMainImage(response.data.blogData.mainImageUrl));
+
       dispatch(appDoneLoading());
     } catch (e) {
       console.log(e.message);

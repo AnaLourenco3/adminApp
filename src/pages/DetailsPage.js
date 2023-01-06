@@ -34,20 +34,24 @@ function DetailsPage() {
       <ButtonBack onClick={() => navigate("/")}>Back</ButtonBack>
       <ContainerBody>
         <ContainerBlogDetails>
-          <ContainerMainImg style={{ position: "relative" }}>
-            <img src={blogData.mainImageUrl} alt="mainImage" width="100%" />
-            <RoundButton onClick={() => navigate("/edit-main-blog-image")}>
-              <MdEdit
-                style={{
-                  position: "relative",
+          {blogData.mainImageUrl ? (
+            <ContainerMainImg style={{ position: "relative" }}>
+              <img src={blogData.mainImageUrl} alt="mainImage" width="100%" />
+              <RoundButton onClick={() => navigate("/edit-main-blog-image")}>
+                <MdEdit
+                  style={{
+                    position: "relative",
 
-                  zIndex: "3",
-                  fontSize: "20px",
-                  fill: "white",
-                }}
-              />
-            </RoundButton>
-          </ContainerMainImg>
+                    zIndex: "3",
+                    fontSize: "20px",
+                    fill: "white",
+                  }}
+                />
+              </RoundButton>
+            </ContainerMainImg>
+          ) : (
+            <p>Diy category has no main image</p>
+          )}
           <Buttons>
             <Button
               style={{ marginRight: "20px" }}
@@ -68,14 +72,22 @@ function DetailsPage() {
           <h2>{blogData.title}</h2>
           <p>{blogData.text}</p>
         </ContainerBlogDetails>
-
+        <VideoFrame
+          src={blogData?.videoUrl}
+          width="320"
+          height="564"
+          title="diy"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></VideoFrame>
         <Images>
           {blogData &&
             blogData.blogImages.map((image) => {
               return (
                 <Image key={image.id}>
                   <img
-                    src={image.imagesUrl}
+                    src={image?.imagesUrl}
                     height="200"
                     alt="upload"
                     style={{ marginBottom: "7px" }}
@@ -165,4 +177,10 @@ const RoundButton = styled.button`
   vertical-align: center;
   border: none;
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1);
+`;
+
+const VideoFrame = styled.iframe`
+  display: inline-block;
+  justify-content: center;
+  border: black;
 `;
