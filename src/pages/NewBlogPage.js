@@ -60,7 +60,9 @@ export default function NewBlogPage() {
     setMainImageUrl("");
     setVideoUrl("");
 
-    navigate(`/blogs/${response.data.newBlogPost.id}`);
+    if (response.data.newBlogPost.id) {
+      navigate(`/blogs/${response.data.newBlogPost.id}`);
+    }
   };
 
   useEffect(() => {
