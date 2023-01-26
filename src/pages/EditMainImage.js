@@ -63,7 +63,7 @@ export default function EditMainImage() {
               accept="image/png, image/jpeg, img/jpg, image/jfif"
               className="form-input"
             />
-            <Button type="submit">Submit</Button>
+            <Button type="submit">Update!</Button>
           </Form>
           {mainImageUrl && (
             <img src={mainImageUrl} alt="chosen" style={{ width: "300px" }} />

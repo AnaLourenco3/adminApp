@@ -12,6 +12,7 @@ import DetailsPage from "./pages/DetailsPage";
 import EditPage from "./pages/EditPage";
 import DetailsImagePage from "./pages/DetailsImagePage";
 import EditMainImage from "./pages/EditMainImage";
+import EditCAtegoryData from "./pages/EditCAtegoryData";
 // import { Homepage, Login, SignUp } from "./pages"
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
           <Route path="/feedbacks" element={<ManageFeedback />} />
           <Route path="/new-blog" element={<NewBlogPage />} />
           <Route path="/edit-main-blog-image" element={<EditMainImage />} />
+          <Route path="/edit-category-data" element={<EditCAtegoryData />} />
         </Routes>
       </div>
       {/* <Routes>

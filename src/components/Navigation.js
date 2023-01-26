@@ -15,7 +15,7 @@ export const Navigation = () => {
   return (
     <Nav>
       <Logo href="/">
-        Admin<span>App</span>
+        MadeByMi <span>AdminApp</span>
       </Logo>
       <Hamburger onClick={() => setOpen(!open)}>
         <span />
@@ -25,6 +25,8 @@ export const Navigation = () => {
       <Menu open={open}>
         <MenuLink to="/new-blog">New Blog</MenuLink>
         <MenuLink to="/feedbacks">Manage Feedbacks on Homepage</MenuLink>
+        <MenuLink to="/edit-category-data">Edit Category Data</MenuLink>
+
         {token ? (
           <button onClick={() => dispatch(logOut())}>Logout</button>
         ) : (

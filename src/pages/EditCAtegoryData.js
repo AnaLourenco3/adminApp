@@ -8,31 +8,23 @@ import { useNavigate } from "react-router-dom";
 import { selectCategories } from "../store/categories/selectors";
 import { fetchCategories } from "../store/categories/thunks";
 
-export default function EditPage() {
-  const navigate = useNavigate();
+export default function EditCAtegoryData() {
+  //   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [date, setDate] = useState("");
-  const [title, setTitle] = useState("");
-  const [text, setText] = useState("");
+  const [quote, setQuote] = useState("");
+  const [description, setDescription] = useState("");
+
   const [category, setCategory] = useState("");
-  const [videoUrl, setVideoUrl] = useState("");
-  const blogData = useSelector(selectBlog);
 
   const categories = useSelector(selectCategories);
 
   useEffect(() => {
     dispatch(fetchCategories());
-    if (blogData) {
-      console.log("from edit", blogData);
-      setDate(blogData.date);
-      setTitle(blogData.title);
-      setText(blogData.text);
-      setCategory(blogData.categoryId);
-      setVideoUrl(blogData.videoUrl);
-    } else {
-      navigate("/");
+    if (categories.id) {
+      setQuote(categories.quote);
+      setDescription(categories.description);
     }
-  }, [blogData, navigate, dispatch]);
+  }, [categories, dispatch]);
 
   function submitForm(event) {
     event.preventDefault();
@@ -40,31 +32,21 @@ export default function EditPage() {
       (c) => c.id === parseInt(category)
     ).name;
 
-    dispatch(
-      editContentDetails(
-        blogData.id,
-        category,
-        categoryName,
-        date,
-        title,
-        text,
-        videoUrl
-      )
-    );
-    navigate(`/blogs/${blogData.id}`);
+    dispatch(editContentDetails(categories.id, quote, description));
+    // navigate(`/blogs/${blogData.id}`);
   }
 
   return (
     <Container>
-      <ButtonBack onClick={() => navigate(`/blogs/${blogData.id}`)}>
+      {/* <ButtonBack onClick={() => navigate(`/blogs/${blogData.id}`)}>
         Back
-      </ButtonBack>
+      </ButtonBack> */}
       <ContainerBody>
         <FormWrapper>
           <Form action="#">
-            <Title>Edit blog Post</Title>
+            <Title>Edit Category Data</Title>
             <FormGroup>
-              <FormLabel>Edit category:</FormLabel>
+              <FormLabel>Category:</FormLabel>
               <InputSelect
                 name="category"
                 onChange={(event) => setCategory(event.target.value)}
@@ -84,47 +66,19 @@ export default function EditPage() {
             </FormGroup>
 
             <FormGroup>
-              <FormLabel>Date:</FormLabel>
+              <FormLabel>Quote:</FormLabel>
               <Input
-                value={date}
-                onChange={(event) => setDate(event.target.value)}
+                value={quote}
+                onChange={(event) => setQuote(event.target.value)}
                 type="text"
-                placeholder="Date example: 27.12.2022"
-                required
               />
             </FormGroup>
             <FormGroup>
-              <FormLabel>Title:</FormLabel>
+              <FormLabel>Description:</FormLabel>
               <Input
-                value={title}
-                onChange={(event) => setTitle(event.target.value)}
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
                 type="text"
-                placeholder="Post title"
-                required
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <FormLabel>Text:</FormLabel>
-              <TextArea
-                value={text}
-                onChange={(event) => setText(event.target.value)}
-                type="text"
-                placeholder="Write your text here"
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormLabel>
-                Add Youtube video url (only permitted for Tutorial category):
-                example "https://www.youtube.com/embed/FFe8T93Xkh0" (tutorial
-                video)
-              </FormLabel>
-              <Input
-                id={videoUrl}
-                value={videoUrl}
-                onChange={(event) => setVideoUrl(event.target.value)}
-                type="text"
-                placeholder="Video Url"
               />
             </FormGroup>
 
@@ -176,7 +130,7 @@ export const FormGroup = styled.div``;
 
 export const FormLabel = styled.label``;
 
-export const Input = styled.input`
+export const Input = styled.textarea`
   display: block;
   width: 100%;
   /* background-color: white; */
@@ -186,6 +140,7 @@ export const Input = styled.input`
   margin: 10px 0 20px 0;
   padding: 20px;
   box-sizing: border-box;
+  resize: vertical;
 `;
 
 const InputImage = styled.input`
