@@ -11,11 +11,14 @@ import { Title, Form, FormGroup, FormLabel, InputSelect } from "./NewBlogPage";
 
 import axios from "axios";
 import { apiUrl } from "../config/constants";
+import { selectToken } from "../store/user/selectors";
+import { useNavigate } from "react-router-dom";
 
 function Homepage() {
   const [category, setCategory] = useState("");
   const [blogs, setBlogs] = useState([]);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const categories = useSelector(selectCategories);
 
@@ -30,6 +33,14 @@ function Homepage() {
       setBlogs([]);
     }
   };
+
+  const token = useSelector(selectToken);
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     dispatch(fetchCategories());

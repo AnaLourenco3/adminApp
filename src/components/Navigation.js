@@ -14,24 +14,27 @@ export const Navigation = () => {
 
   return (
     <Nav>
-      <Logo href="/">
-        MadeByMi <span>AdminApp</span>
-      </Logo>
+      {token ? (
+        <Logo href="/">
+          MadeByMi <span>AdminApp</span>
+        </Logo>
+      ) : null}
       <Hamburger onClick={() => setOpen(!open)}>
         <span />
         <span />
         <span />
       </Hamburger>
       <Menu open={open}>
-        <MenuLink to="/new-blog">New Blog</MenuLink>
-        <MenuLink to="/feedbacks">Manage Feedbacks on Homepage</MenuLink>
-        <MenuLink to="/edit-category-data">Edit Category Data</MenuLink>
-
+        {token ? <MenuLink to="/new-blog">New Blog</MenuLink> : null}
         {token ? (
-          <button onClick={() => dispatch(logOut())}>Logout</button>
-        ) : (
-          <MenuLink to="/login">Login</MenuLink>
-        )}
+          <MenuLink to="/feedbacks">Manage Feedbacks on Homepage</MenuLink>
+        ) : null}
+        {token ? (
+          <MenuLink to="/edit-category-data">Edit Category Data</MenuLink>
+        ) : null}
+        {token ? (
+          <Button onClick={() => dispatch(logOut())}>Logout</Button>
+        ) : null}
       </Menu>
     </Nav>
   );
@@ -107,5 +110,22 @@ const Menu = styled.div`
     width: 100%;
     max-height: ${({ open }) => (open ? "300px" : "0")};
     transition: max-height 0.3s ease-in;
+  }
+`;
+
+const Button = styled.button`
+  padding: 1rem 2rem;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  font-weight: 600;
+  color: white;
+  transition: all 0.3s ease-in;
+  font-size: 0.9rem;
+  border: none;
+  background: none;
+
+  &:hover {
+    text-decoration: underline;
   }
 `;

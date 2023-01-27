@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { selectBlog } from "../store/blog/selectors";
-import { editContentDetails, fetchBlogDataById } from "../store/blog/thunks";
+import { editContentDetails } from "../store/blog/thunks";
 import { useNavigate } from "react-router-dom";
 import { selectCategories } from "../store/categories/selectors";
 import { fetchCategories } from "../store/categories/thunks";
+import { selectToken } from "../store/user/selectors";
 
 export default function EditCAtegoryData() {
   //   const navigate = useNavigate();
@@ -35,6 +35,15 @@ export default function EditCAtegoryData() {
     dispatch(editContentDetails(categories.id, quote, description));
     // navigate(`/blogs/${blogData.id}`);
   }
+
+  const token = useSelector(selectToken);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   return (
     <Container>

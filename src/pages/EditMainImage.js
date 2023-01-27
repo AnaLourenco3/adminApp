@@ -5,6 +5,7 @@ import { selectBlog } from "../store/blog/selectors";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { replaceMainImageBlog } from "../store/blog/thunks";
+import { selectToken } from "../store/user/selectors";
 
 export default function EditMainImage() {
   const dispatch = useDispatch();
@@ -36,6 +37,14 @@ export default function EditMainImage() {
     setMainImageUrl(null);
     navigate(`/blogs/${blogData.id}`);
   };
+
+  const token = useSelector(selectToken);
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     if (blogData) {

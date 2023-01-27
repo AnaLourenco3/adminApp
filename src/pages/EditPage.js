@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import styled from "styled-components";
 import { selectBlog } from "../store/blog/selectors";
-import { editContentDetails, fetchBlogDataById } from "../store/blog/thunks";
+import { editContentDetails } from "../store/blog/thunks";
 import { useNavigate } from "react-router-dom";
 import { selectCategories } from "../store/categories/selectors";
 import { fetchCategories } from "../store/categories/thunks";
+import { selectToken } from "../store/user/selectors";
 
 export default function EditPage() {
   const navigate = useNavigate();
@@ -53,6 +54,14 @@ export default function EditPage() {
     );
     navigate(`/blogs/${blogData.id}`);
   }
+
+  const token = useSelector(selectToken);
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   return (
     <Container>

@@ -13,7 +13,8 @@ import EditPage from "./pages/EditPage";
 import DetailsImagePage from "./pages/DetailsImagePage";
 import EditMainImage from "./pages/EditMainImage";
 import EditCAtegoryData from "./pages/EditCAtegoryData";
-// import { Homepage, Login, SignUp } from "./pages"
+import SignUp from "./pages/SignUp";
+import Login from "./pages/Login";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,7 +29,7 @@ function App() {
       <MessageBox />
       <div className="container">
         <Routes>
-          <Route path="/" element={<Homepage />} />
+          <Route path="/homepage" element={<Homepage />} />
           <Route path="/blogs/:id" element={<DetailsPage />} />
           <Route path="/edit-blog" element={<EditPage />} />
           <Route path="/images-blog" element={<DetailsImagePage />} />
@@ -36,13 +37,10 @@ function App() {
           <Route path="/new-blog" element={<NewBlogPage />} />
           <Route path="/edit-main-blog-image" element={<EditMainImage />} />
           <Route path="/edit-category-data" element={<EditCAtegoryData />} />
+          {/*<Route path="/signup" element={<SignUp />} /> */}
+          <Route path="/" element={<Login />} />
         </Routes>
       </div>
-      {/* <Routes>
-      
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/login" element={<Login />} />
-      </Routes> */}
     </div>
   );
 }

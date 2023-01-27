@@ -8,6 +8,8 @@ import {
 } from "../store/feedback/thunks";
 import { selectFeedbacks } from "../store/feedback/selectors";
 import styled from "styled-components";
+import { selectToken } from "../store/user/selectors";
+import { useNavigate } from "react-router-dom";
 
 export default function Upload() {
   const [file, setFile] = useState("");
@@ -41,6 +43,15 @@ export default function Upload() {
     e.preventDefault();
     dispatch(deleteFeedback(feedbackId));
   };
+
+  const token = useSelector(selectToken);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     dispatch(fetchFeedbacks());

@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import { apiUrl } from "../config/constants";
+import { selectToken } from "../store/user/selectors";
 
 export default function NewBlogPage() {
   const dispatch = useDispatch();
@@ -22,9 +23,6 @@ export default function NewBlogPage() {
   const [category, setCategory] = useState(1);
   const [videoUrl, setVideoUrl] = useState("");
   const [file, setFile] = useState("");
-
-  //   const [files, setFiles] = useState("");
-  //   const [images, setImages] = useState("");
 
   const categories = useSelector(selectCategories);
   const { id } = useParams();
@@ -64,6 +62,14 @@ export default function NewBlogPage() {
       navigate(`/blogs/${response.data.newBlogPost.id}`);
     }
   };
+
+  const token = useSelector(selectToken);
+
+  useEffect(() => {
+    if (token === null) {
+      navigate("/");
+    }
+  }, [token, navigate]);
 
   useEffect(() => {
     dispatch(fetchCategories());
