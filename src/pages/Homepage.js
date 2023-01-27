@@ -9,11 +9,6 @@ import { fetchCategories } from "../store/categories/thunks";
 
 import { Title, Form, FormGroup, FormLabel, InputSelect } from "./NewBlogPage";
 
-import { selectBlogs } from "../store/blog/selectors";
-import { fetchBlogData } from "../store/blog/thunks";
-import { fetchCategoriesWithData } from "../store/categories/thunks";
-import { selectCategoriesWithData } from "../store/categories/selectors";
-
 import axios from "axios";
 import { apiUrl } from "../config/constants";
 
