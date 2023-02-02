@@ -1,38 +1,14 @@
-# Frontend template
+Final portfolio project for Codaisseur's FullStack Developer Bootcamp.
+I did a webpage and content management app for a good friend of mine that works as an Event Planner.
+The website showcases her services, displays her past events by category, and provides a way for clients to contact her. The content management (or admin) app allows my friend to easily add, edit, and delete content on the website.
 
-This is a simple react/redux/jwt template to start a project quickly
+To build this project, I utilised React, Redux, Node.js, Cloudinary, PostgreSQL, Axios, Sequelize, Sequelize CLI, Express, bcrypt, JSON Web Token, and styled components. I am continuing to improve the content management app with additional features.
 
-## Table of contents:
+The websites can be visited here: 
+https://madebymievents.netlify.app/
+https://madebymiadminapp.netlify.app/homepage
 
-- **[Setup](#setup-how-to-use-this-template)**
-- **[Create React App docs](#cra-docs)**
-
-## SETUP How to use this template
-
-1. Create a new project based on this template using the `Use this template` button
-
-![HOW_TO_USE](https://user-images.githubusercontent.com/20372832/77003323-70966180-695d-11ea-8abe-b362d57135f3.gif)
-
-2. Clone the app
-
-```
-git clone git@github.com:YOUR_GITHUB_NAME/YOUR_PROJECT_NAME.git
-```
-
-3. cd into your project
-
-```
-cd YOUR_PROJECT_NAME
-```
-
-4. install dependencies
-
-```
-npm install
-```
-
-5. Start development server with npm start
-
-```
-npm start
-```
+GitHub repositories: 
+https://github.com/AnaLourenco3/mieventsclean 
+https://github.com/AnaLourenco3/adminApp
+https://github.com/AnaLourenco3/mieventsbackend
