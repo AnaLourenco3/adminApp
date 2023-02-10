@@ -18,6 +18,21 @@ export const categorySlice = createSlice({
     categoriesPostSuccess: (state, action) => {
       state.categories.push({ ...action.payload });
     },
+    updateCategoryDetails: (state, action) => {
+      const { id, quote, description } = action.payload;
+      const category = state.categories.find((category) => category.id === id);
+      if (category) {
+        category.quote = quote;
+        category.description = description;
+      }
+      const categoryWithData = state.categoriesWithData.find(
+        (category) => category.id === id
+      );
+      if (categoryWithData) {
+        categoryWithData.quote = quote;
+        categoryWithData.description = description;
+      }
+    },
   },
 });
 
@@ -27,6 +42,7 @@ export const {
   fetchCategoriesSuccess,
   categoriesPostSuccess,
   fetchCategoriesWithDataSuccess,
+  updateCategoryDetails,
 } = categorySlice.actions;
 
 export default categorySlice.reducer;

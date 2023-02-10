@@ -5,14 +5,20 @@ import styled from "styled-components";
 import { editContentDetails } from "../store/blog/thunks";
 import { useNavigate } from "react-router-dom";
 import { selectCategories } from "../store/categories/selectors";
-import { fetchCategories } from "../store/categories/thunks";
+import {
+  editCategoriesDetails,
+  fetchCategories,
+} from "../store/categories/thunks";
 import { selectToken } from "../store/user/selectors";
+import axios from "axios";
+import { apiUrl } from "../config/constants";
 
 export default function EditCAtegoryData() {
   //   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [quote, setQuote] = useState("");
   const [description, setDescription] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
 
   const [category, setCategory] = useState("");
 
@@ -20,21 +26,26 @@ export default function EditCAtegoryData() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    if (categories.id) {
-      setQuote(categories.quote);
-      setDescription(categories.description);
-    }
-  }, [categories, dispatch]);
+  }, [dispatch]);
 
   function submitForm(event) {
     event.preventDefault();
-    const categoryName = categories.find(
-      (c) => c.id === parseInt(category)
-    ).name;
-
-    dispatch(editContentDetails(categories.id, quote, description));
-    // navigate(`/blogs/${blogData.id}`);
+    dispatch(editCategoriesDetails(category, quote, description));
+    navigate(`/`);
   }
+
+  const onSelectCategory = async (event) => {
+    const categoryId = event.target.value;
+    try {
+      const response = await axios.get(`${apiUrl}/categories/${categoryId}`);
+      setQuote(response.data.category.quote);
+      setDescription(response.data.category.description);
+      setImageUrl(response.data.category.imageUrl);
+      setCategory(categoryId);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   const token = useSelector(selectToken);
   const navigate = useNavigate();
@@ -58,7 +69,7 @@ export default function EditCAtegoryData() {
               <FormLabel>Category:</FormLabel>
               <InputSelect
                 name="category"
-                onChange={(event) => setCategory(event.target.value)}
+                onChange={(event) => onSelectCategory(event)}
                 required
                 value={category}
               >
@@ -139,7 +150,7 @@ export const FormGroup = styled.div``;
 
 export const FormLabel = styled.label``;
 
-export const Input = styled.textarea`
+export const Input = styled.input`
   display: block;
   width: 100%;
   /* background-color: white; */

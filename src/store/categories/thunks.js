@@ -5,6 +5,7 @@ import {
   categoriesPostSuccess,
   fetchCategoriesSuccess,
   fetchCategoriesWithDataSuccess,
+  updateCategoryDetails,
 } from "./slice";
 
 export const fetchCategories = () => {
@@ -81,6 +82,33 @@ export const addNewBlogPost = (id, date, title, text, mainImage) => {
         );
       }
       dispatch(appDoneLoading());
+    }
+  };
+};
+
+export const editCategoriesDetails = (id, quote, description) => {
+  return async (dispatch, getState) => {
+    try {
+      dispatch(appLoading());
+
+      const response = await axios.put(`${apiUrl}/categories/${id}`, {
+        quote,
+        description,
+      });
+
+      console.log("updated category details", response.data);
+
+      dispatch(
+        updateCategoryDetails({
+          id,
+          quote: response.data.category.quote,
+          description: response.data.category.description,
+        })
+      );
+
+      dispatch(appDoneLoading());
+    } catch (e) {
+      console.log(e.message);
     }
   };
 };
