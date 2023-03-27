@@ -36,7 +36,7 @@ function App() {
           <Route path="/feedbacks" element={<ManageFeedback />} />
           <Route path="/new-blog" element={<NewBlogPage />} />
           <Route path="/edit-main-blog-image" element={<EditMainImage />} />
-          <Route path="/edit-category-data" element={<EditCAtegoryData />} />
+          {/* <Route path="/edit-category-data" element={<EditCAtegoryData />} /> */}
           {/*<Route path="/signup" element={<SignUp />} /> */}
           <Route path="/" element={<Login />} />
         </Routes>
