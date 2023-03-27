@@ -29,9 +29,9 @@ export const Navigation = () => {
         {token ? (
           <MenuLink to="/feedbacks">Manage Feedbacks on Homepage</MenuLink>
         ) : null}
-        {token ? (
+        {/* {token ? (
           <MenuLink to="/edit-category-data">Edit Category Data</MenuLink>
-        ) : null}
+        ) : null} */}
         {token ? (
           <Button onClick={() => dispatch(logOut())}>Logout</Button>
         ) : null}
