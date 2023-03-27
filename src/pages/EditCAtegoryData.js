@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import styled from "styled-components";
-import { editContentDetails } from "../store/blog/thunks";
 import { useNavigate } from "react-router-dom";
 import { selectCategories } from "../store/categories/selectors";
 import {
@@ -122,11 +121,8 @@ const Container = styled.div`
 const ContainerBody = styled.div`
   text-align: center;
   max-width: 700px;
-
   width: 100%;
-
   margin: 0 auto auto auto;
-
   text-align: center;
 `;
 
@@ -158,15 +154,8 @@ export const Input = styled.input`
   border-radius: 5px;
   border: 1px solid #ddd;
   margin: 10px 0 20px 0;
-  padding: 20px;
+  /* padding: 20px; */
   box-sizing: border-box;
-  resize: vertical;
-`;
-
-const InputImage = styled.input`
-  display: flex;
-  margin: 10px 0 20px 0;
-  /* padding: 0 20px; */
 `;
 
 export const InputSelect = styled.select`
@@ -192,21 +181,4 @@ export const Button = styled.button`
   padding: 0 20px;
   cursor: pointer;
   box-sizing: border-box;
-`;
-
-const TextArea = styled.textarea`
-  width: 100%;
-  min-height: 100px;
-  resize: vertical;
-  background-color: white;
-  height: 40px;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  margin: 10px 0 20px 0;
-  padding: 20px;
-`;
-
-const ButtonBack = styled.button`
-  border: none;
-  background: none;
 `;
